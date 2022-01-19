@@ -27,9 +27,7 @@ class MyApp extends StatelessWidget {
             '/language': (context) => const LanguageChange(),
           },
           title: 'Flutter Demo',
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-          ),
+          theme: ThemeData(),
           home: const MainTranslete(),
         ),
       ),
