@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:translator_deepl/bloc/translate_bloc/translate_bloc.dart';
 import 'package:translator_deepl/widgets/Inherited/language_scope.dart';
+import 'package:translator_deepl/widgets/translate_screen/language_change_widget.dart';
 
 class MainTranslete extends StatelessWidget {
   const MainTranslete({Key? key}) : super(key: key);
@@ -137,8 +138,8 @@ class MainTranslateContent extends StatelessWidget {
                     style: mainTextStyle,
                   ),
                   TextButton(
-                      onPressed: () =>
-                          Navigator.of(context).pushNamed('/language'),
+                      onPressed: () => Navigator.of(context)
+                          .push(SlideRightRoute(page: const LanguageChange())),
                       child: Text(
                         LanguageScope.of(context).currentLanguage,
                         style: const TextStyle(
@@ -197,4 +198,35 @@ class MainTranslateContent extends StatelessWidget {
       );
     });
   }
+}
+
+class SlideRightRoute extends PageRouteBuilder {
+  final Widget page;
+  SlideRightRoute({required this.page})
+      : super(
+          pageBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+          ) =>
+              page,
+          transitionsBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+            Widget child,
+          ) =>
+              ScaleTransition(
+            scale: Tween<double>(
+              begin: 0.0,
+              end: 1.0,
+            ).animate(
+              CurvedAnimation(
+                parent: animation,
+                curve: Curves.fastOutSlowIn,
+              ),
+            ),
+            child: child,
+          ),
+        );
 }

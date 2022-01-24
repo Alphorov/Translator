@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:translator_deepl/widgets/Inherited/language_scope.dart';
 import 'package:translator_deepl/widgets/translate_screen/country_list.dart';
+import 'package:translator_deepl/widgets/translate_screen/main_translete_widget.dart';
 
 class LanguageChange extends StatefulWidget {
   const LanguageChange({Key? key}) : super(key: key);
@@ -36,8 +37,8 @@ class _LanguageChangeState extends State<LanguageChange> {
                           IconButton(
                             color: Colors.black,
                             icon: const Icon(Icons.arrow_back_ios),
-                            onPressed: () =>
-                                Navigator.of(context).pushNamed('/main'),
+                            onPressed: () => Navigator.pop(context,
+                                SlideRightRoute(page: const MainTranslete())),
                           ),
                         ],
                       ),
@@ -114,7 +115,8 @@ class _LanguageListState extends State<LanguageList> {
                   .changeCurrentLang(widget.countries[index]['name']!),
               LanguageScope.of(context)
                   .changeTargetLang(widget.countries[index]['code']!),
-              Navigator.pop(context)
+              Navigator.pop(
+                  context, SlideRightRoute(page: const MainTranslete()))
             },
             child: ListTile(
               tileColor: Colors.purple[50],
@@ -129,4 +131,35 @@ class _LanguageListState extends State<LanguageList> {
           );
         });
   }
+}
+
+class SlideRightRoute extends PageRouteBuilder {
+  final Widget page;
+  SlideRightRoute({required this.page})
+      : super(
+          pageBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+          ) =>
+              page,
+          transitionsBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+            Widget child,
+          ) =>
+              ScaleTransition(
+            scale: Tween<double>(
+              begin: 1.0,
+              end: 0.0,
+            ).animate(
+              CurvedAnimation(
+                parent: animation,
+                curve: Curves.fastOutSlowIn,
+              ),
+            ),
+            child: child,
+          ),
+        );
 }

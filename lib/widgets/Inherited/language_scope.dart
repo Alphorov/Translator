@@ -16,13 +16,12 @@ class LanguageScope extends StatefulWidget {
 }
 
 class _LanguageScopeState extends State<LanguageScope> {
-  String currentLanguage = 'Russian';
+  String currentLanguage = 'Русский';
   String targetLanguage = 'ru';
 
-  void changeCurrentLanguage(String lang) {
-    setState(() {
-      currentLanguage = lang;
-    });
+  void changeCurrentLanguage(String lang) async {
+    currentLanguage = lang;
+    setState(() {});
   }
 
   void changeTargetLanguage(String lang) {
