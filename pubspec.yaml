@@ -38,6 +38,7 @@ dependencies:
   bloc: ^8.0.2
   dio: ^4.0.4
   translator: ^0.1.7
+  google_fonts: ^2.2.0
 
 dev_dependencies:
   flutter_test:

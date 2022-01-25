@@ -6,7 +6,7 @@ import 'package:translator_deepl/repositoty/repository.dart';
 import 'package:translator_deepl/widgets/Inherited/language_scope.dart';
 import 'package:translator_deepl/widgets/translate_screen/language_change_widget.dart';
 
-import 'animations/language_animation.dart';
+import 'animations/animations_in_and_out_main_screen.dart';
 import 'bloc/translate_bloc/translate_bloc.dart';
 import 'widgets/translate_screen/main_translete_widget.dart';
 
