@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:translator_deepl/repositoty/repository.dart';
 import 'package:translator_deepl/widgets/Inherited/language_scope.dart';
 import 'package:translator_deepl/widgets/translate_screen/language_change_widget.dart';
 
+import 'animations/language_animation.dart';
 import 'bloc/translate_bloc/translate_bloc.dart';
 import 'widgets/translate_screen/main_translete_widget.dart';
 
@@ -22,13 +25,17 @@ class MyApp extends StatelessWidget {
         ],
         child: MaterialApp(
           initialRoute: '/main',
-          routes: {
-            '/main': (context) => const MainTranslete(),
-            '/language': (context) => const LanguageChange(),
+          onGenerateRoute: (settings) {
+            log(settings.name.toString());
+            if (settings.name == '/main') {
+              return SlideRightRoute(page: const MainTranslete());
+            }
+            if (settings.name == '/language') {
+              return SlideRightRoute(page: const LanguageChange());
+            }
           },
           title: 'Flutter Demo',
           theme: ThemeData(),
-          home: const MainTranslete(),
         ),
       ),
     );
