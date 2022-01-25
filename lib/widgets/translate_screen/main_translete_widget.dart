@@ -1,9 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:translator_deepl/bloc/translate_bloc/translate_bloc.dart';
 import 'package:translator_deepl/widgets/Inherited/language_scope.dart';
-import 'package:translator_deepl/widgets/translate_screen/language_change_widget.dart';
 
 class MainTranslete extends StatelessWidget {
   const MainTranslete({Key? key}) : super(key: key);
@@ -12,36 +12,27 @@ class MainTranslete extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: const Color(0xff252A30),
         body: SingleChildScrollView(
           child: Column(
             children: [
               ColoredBox(
-                color: const Color.fromRGBO(143, 128, 231, 1),
+                color: const Color(0xff2B282A),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 15),
-                  child: SizedBox(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 19),
-                          child: Icon(
-                            Icons.translate,
-                            color: Colors.white,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 87,
-                        ),
-                        Text(
-                          'Translator',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
+                  padding: const EdgeInsets.only(bottom: 7),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('PlTranslator',
+                          style: GoogleFonts.montserratAlternates(
+                              fontSize: 36,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w300)),
+                      const SizedBox(
+                        width: 7,
+                      ),
+                      SvgPicture.asset('assets/icons/top_icon.svg')
+                    ],
                   ),
                 ),
               ),
@@ -57,10 +48,10 @@ class MainTranslete extends StatelessWidget {
 class MainTranslateContent extends StatelessWidget {
   MainTranslateContent({Key? key}) : super(key: key);
 
+  final mainTextStyle =
+      GoogleFonts.lato(fontSize: 18, fontWeight: FontWeight.w400);
   final inputController = TextEditingController();
   final outputController = TextEditingController();
-  final mainTextStyle = const TextStyle(
-      color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold);
 
   void translate(BuildContext context, TranslateState state) {
     final bloc = context.read<TranslateBloc>();
@@ -80,153 +71,143 @@ class MainTranslateContent extends StatelessWidget {
         outputController.text = 'Ошибка перевода: ${state.error}';
       }
     }, builder: (context, state) {
-      return ColoredBox(
-        color: const Color.fromRGBO(143, 128, 231, 0.5),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
+      return Stack(
+        children: [
+          Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(
-                height: 20,
-              ),
-              Text(
-                'Введите текст на любом языке',
-                style: mainTextStyle,
-              ),
-              const SizedBox(
-                height: 15,
-              ),
               Container(
                 decoration: BoxDecoration(
-                  boxShadow: const [
+                  color: const Color(0xff28282A),
+                  boxShadow: [
                     BoxShadow(
-                        spreadRadius: 1,
-                        blurRadius: 10,
-                        offset: Offset(0, 3),
-                        color: Colors.black26),
-                  ],
-                  borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-                  color: Colors.purple[50],
-                ),
-                height: 200,
-                child: TextField(
-                  cursorWidth: 3,
-                  cursorRadius: const Radius.circular(6),
-                  cursorHeight: 22,
-                  cursorColor: Colors.purple,
-                  controller: inputController,
-                  decoration: const InputDecoration(
-                    contentPadding: EdgeInsets.all(8),
-                    hintText: 'Введите текст',
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.transparent),
+                      color: Colors.black.withOpacity(0.5),
+                      spreadRadius: 1,
+                      blurRadius: 1,
+                      offset: const Offset(0, 1),
                     ),
-                    border: InputBorder.none,
-                  ),
-                  keyboardType: TextInputType.multiline,
-                  maxLines: null,
-                ),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              Row(
-                children: [
-                  Text(
-                    'Перевести на',
-                    style: mainTextStyle,
-                  ),
-                  TextButton(
-                      onPressed: () => Navigator.of(context)
-                          .push(SlideRightRoute(page: const LanguageChange())),
-                      child: Text(
-                        LanguageScope.of(context).currentLanguage,
-                        style: const TextStyle(
-                            color: Colors.blue,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold),
-                      ))
-                ],
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  boxShadow: const [
-                    BoxShadow(
-                        spreadRadius: 1,
-                        blurRadius: 10,
-                        offset: Offset(0, 3),
-                        color: Colors.black26),
                   ],
-                  borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-                  color: Colors.purple[50],
                 ),
-                height: 200,
-                child: TextField(
-                  cursorWidth: 3,
-                  cursorRadius: const Radius.circular(6),
-                  cursorHeight: 22,
-                  cursorColor: Colors.purple,
-                  controller: outputController,
-                  decoration: const InputDecoration(
-                    contentPadding: EdgeInsets.all(8),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.transparent),
+                height: 283,
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        TextButton(
+                            onPressed: () {},
+                            child: Row(
+                              children: [
+                                Text(
+                                  LanguageScope.of(context).currentLanguage,
+                                  style: mainTextStyle,
+                                ),
+                                SvgPicture.asset(
+                                    'assets/icons/down_arrow_icon.svg')
+                              ],
+                            )),
+                        Expanded(
+                          child: TextButton(
+                              onPressed: () {},
+                              child: SvgPicture.asset(
+                                  'assets/icons/reverse_icon.svg')),
+                        ),
+                        TextButton(
+                          onPressed: () {},
+                          child: Text(
+                            LanguageScope.of(context).targetLanguage,
+                            style: mainTextStyle,
+                          ),
+                        )
+                      ],
                     ),
-                    border: InputBorder.none,
-                  ),
-                  keyboardType: TextInputType.multiline,
-                  maxLines: null,
+                    const Divider(
+                      thickness: 1,
+                      height: 0,
+                      color: Color(0xffC9CACC),
+                    ),
+                    TextField(
+                      autofocus: false,
+                      cursorWidth: 2,
+                      cursorRadius: const Radius.circular(6),
+                      cursorHeight: 22,
+                      cursorColor: Colors.white,
+                      controller: inputController,
+                      decoration: const InputDecoration(
+                        contentPadding: EdgeInsets.all(8),
+                        hintText: 'Введите текст',
+                        hintStyle: TextStyle(color: Color(0xffC9CACC)),
+                        border: InputBorder.none,
+                      ),
+                      keyboardType: TextInputType.multiline,
+                      maxLines: null,
+                    ),
+                  ],
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 25),
-                child: Center(
-                  child: CupertinoButton(
-                    onPressed: () => translate(context, state),
-                    child: const Text('Перевести'),
-                    color: Colors.purple,
+                padding: const EdgeInsets.all(8),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: const Color(0xff28282A),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.5),
+                        spreadRadius: 1,
+                        blurRadius: 1,
+                        offset: const Offset(0, 1),
+                      ),
+                    ],
+                  ),
+                  height: 200,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 5, horizontal: 45),
+                        child: Text(
+                          LanguageScope.of(context).currentLanguage,
+                          style: GoogleFonts.lato(
+                              color: const Color(0xffA3A3A3),
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      TextField(
+                        cursorWidth: 2,
+                        cursorRadius: const Radius.circular(6),
+                        cursorHeight: 22,
+                        cursorColor: Colors.white,
+                        controller: outputController,
+                        decoration: const InputDecoration(
+                          contentPadding: EdgeInsets.all(8),
+                          border: InputBorder.none,
+                        ),
+                        keyboardType: TextInputType.multiline,
+                        maxLines: null,
+                      ),
+                    ],
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 120,
-              )
             ],
           ),
-        ),
+          Positioned(
+              right: 10,
+              top: 55,
+              child: IconButton(
+                icon: SvgPicture.asset('assets/icons/microphon_icon.svg'),
+                onPressed: () {},
+              )),
+          Positioned(
+            left: 10,
+            top: 286.5,
+            child: IconButton(
+                onPressed: () {},
+                icon: SvgPicture.asset('assets/icons/voice_icon.svg')),
+          ),
+        ],
       );
     });
   }
-}
-
-class SlideRightRoute extends PageRouteBuilder {
-  final Widget page;
-  SlideRightRoute({required this.page})
-      : super(
-          pageBuilder: (
-            BuildContext context,
-            Animation<double> animation,
-            Animation<double> secondaryAnimation,
-          ) =>
-              page,
-          transitionsBuilder: (
-            BuildContext context,
-            Animation<double> animation,
-            Animation<double> secondaryAnimation,
-            Widget child,
-          ) =>
-              ScaleTransition(
-            scale: Tween<double>(
-              begin: 0.0,
-              end: 1.0,
-            ).animate(
-              CurvedAnimation(
-                parent: animation,
-                curve: Curves.fastOutSlowIn,
-              ),
-            ),
-            child: child,
-          ),
-        );
 }

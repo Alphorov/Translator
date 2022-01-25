@@ -17,9 +17,10 @@ class LanguageScope extends StatefulWidget {
 
 class _LanguageScopeState extends State<LanguageScope> {
   String currentLanguage = 'Русский';
-  String targetLanguage = 'ru';
+  String requestLanguage = 'ru';
+  String targetLanguage = 'Английский';
 
-  void changeCurrentLanguage(String lang) async {
+  void changeCurrentLanguage(String lang) {
     currentLanguage = lang;
     setState(() {});
   }
@@ -30,11 +31,19 @@ class _LanguageScopeState extends State<LanguageScope> {
     });
   }
 
+  void changeRequestLanguage(String lang) {
+    setState(() {
+      requestLanguage = lang;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return _LanguageScopeInherited(
+      changeRequestLang: changeRequestLanguage,
       changeTargetLang: changeTargetLanguage,
       changeCurrentLang: changeCurrentLanguage,
+      requestLanguage: requestLanguage,
       currentLanguage: currentLanguage,
       targetLanguage: targetLanguage,
       child: widget.child,
@@ -44,6 +53,8 @@ class _LanguageScopeState extends State<LanguageScope> {
 
 class _LanguageScopeInherited extends InheritedModel {
   const _LanguageScopeInherited({
+    required this.requestLanguage,
+    required this.changeRequestLang,
     Key? key,
     required this.changeTargetLang,
     required this.changeCurrentLang,
@@ -54,8 +65,10 @@ class _LanguageScopeInherited extends InheritedModel {
 
   final String currentLanguage;
   final String targetLanguage;
+  final String requestLanguage;
   final void Function(String) changeCurrentLang;
   final void Function(String) changeTargetLang;
+  final void Function(String) changeRequestLang;
 
   @override
   bool updateShouldNotify(_LanguageScopeInherited oldWidget) {

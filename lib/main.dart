@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:translator_deepl/repositoty/repository.dart';
 import 'package:translator_deepl/widgets/Inherited/language_scope.dart';
@@ -19,10 +20,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LanguageScope(
-      child: MultiBlocProvider(
-        providers: [
-          BlocProvider(create: (context) => TranslateBloc(Repository())),
-        ],
+        child: MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => TranslateBloc(Repository())),
+      ],
+      child: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: const SystemUiOverlayStyle(
+          statusBarColor: Color(0xff2B282A),
+          systemNavigationBarColor: Colors.black,
+          statusBarIconBrightness: Brightness.dark,
+          systemNavigationBarIconBrightness: Brightness.dark,
+        ),
         child: MaterialApp(
           initialRoute: '/main',
           onGenerateRoute: (settings) {
@@ -38,6 +46,6 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(),
         ),
       ),
-    );
+    ));
   }
 }

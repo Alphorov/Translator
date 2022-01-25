@@ -18,8 +18,8 @@ class SlideRightRoute extends PageRouteBuilder {
           ) =>
               ScaleTransition(
             scale: Tween<double>(
-              begin: 1.0,
-              end: 0.0,
+              begin: 0.0,
+              end: 1.0,
             ).animate(
               CurvedAnimation(
                 parent: animation,

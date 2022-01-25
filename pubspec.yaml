@@ -39,6 +39,7 @@ dependencies:
   dio: ^4.0.4
   translator: ^0.1.7
   google_fonts: ^2.2.0
+  flutter_svg: ^1.0.3
 
 dev_dependencies:
   flutter_test:
@@ -63,9 +64,12 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/icons/top_icon.svg
+    - assets/icons/reverse_icon.svg
+    - assets/icons/down_arrow_icon.svg
+    - assets/icons/voice_icon.svg
+    - assets/icons/microphon_icon.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
