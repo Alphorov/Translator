@@ -1,11 +1,16 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:translator_deepl/widgets/Inherited/language_scope.dart';
 import 'package:translator_deepl/widgets/translate_screen/country_list.dart';
 
+import 'main_translete_widget.dart';
+
 class LanguageChange extends StatefulWidget {
-  const LanguageChange({Key? key}) : super(key: key);
+  const LanguageChange({Key? key, required this.targetOrCurrent})
+      : super(key: key);
+  final LanType targetOrCurrent;
 
   @override
   _LanguageChangeState createState() => _LanguageChangeState();
@@ -21,7 +26,7 @@ class _LanguageChangeState extends State<LanguageChange> {
         body: Column(
           children: [
             ColoredBox(
-              color: const Color.fromRGBO(143, 128, 231, 1),
+              color: const Color(0xff303134),
               child: SizedBox(
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,12 +55,16 @@ class _LanguageChangeState extends State<LanguageChange> {
                         cursorRadius: const Radius.circular(6),
                         cursorHeight: 20,
                         cursorColor: Colors.purple,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           hintText: 'Поиск языка',
-                          constraints:
-                              BoxConstraints(maxHeight: 50, minHeight: 50),
+                          hintStyle: GoogleFonts.lato(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.white),
+                          constraints: const BoxConstraints(
+                              maxHeight: 50, minHeight: 50),
                           border: InputBorder.none,
-                          focusedBorder: OutlineInputBorder(
+                          focusedBorder: const OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.transparent),
                           ),
                         ),
@@ -74,6 +83,7 @@ class _LanguageChangeState extends State<LanguageChange> {
                 valueListenable: _langConroller,
                 builder: (context, TextEditingValue text, _) {
                   return LanguageList(
+                    targetOrCurrent: widget.targetOrCurrent,
                     countries: Country.country
                         .where(
                           (element) => element['name']!
@@ -93,8 +103,11 @@ class _LanguageChangeState extends State<LanguageChange> {
 }
 
 class LanguageList extends StatefulWidget {
-  const LanguageList({Key? key, required this.countries}) : super(key: key);
+  const LanguageList(
+      {Key? key, required this.countries, required this.targetOrCurrent})
+      : super(key: key);
   final List<Map<String, String>> countries;
+  final LanType targetOrCurrent;
 
   @override
   State<LanguageList> createState() => _LanguageListState();
@@ -103,26 +116,39 @@ class LanguageList extends StatefulWidget {
 class _LanguageListState extends State<LanguageList> {
   @override
   Widget build(BuildContext context) {
-    log(widget.countries.toString());
     return ListView.builder(
         itemCount: widget.countries.length,
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
             onTap: () => {
-              LanguageScope.of(context)
-                  .changeCurrentLang(widget.countries[index]['name']!),
-              LanguageScope.of(context)
-                  .changeTargetLang(widget.countries[index]['code']!),
-              Navigator.pop(context)
+              log(widget.targetOrCurrent.toString()),
+              if (widget.targetOrCurrent == LanType.current)
+                {
+                  LanguageScope.of(context)
+                      .changeCurrentLang(widget.countries[index]['name']!),
+                  LanguageScope.of(context).changeRequestCurrentLanguage(
+                      widget.countries[index]['code']!),
+                  log(LanguageScope.of(context).requestCurrentLanguage),
+                  Navigator.pop(context),
+                }
+              else if (widget.targetOrCurrent == LanType.target)
+                {
+                  LanguageScope.of(context)
+                      .changeTargetLang(widget.countries[index]['name']!),
+                  LanguageScope.of(context).changeRequestTargetLang(
+                      widget.countries[index]['code']!),
+                  log(LanguageScope.of(context).),
+                  Navigator.pop(context),
+                }
             },
             child: ListTile(
-              tileColor: Colors.purple[50],
+              tileColor: const Color(0xff202020),
               title: Text(
                 widget.countries[index]['name']!,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                ),
+                style: GoogleFonts.lato(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.white),
               ),
             ),
           );

@@ -1,14 +1,10 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:translator_deepl/repositoty/repository.dart';
 import 'package:translator_deepl/widgets/Inherited/language_scope.dart';
 import 'package:translator_deepl/widgets/translate_screen/language_change_widget.dart';
 
 import 'animations/animations_in_and_out_main_screen.dart';
-import 'bloc/translate_bloc/translate_bloc.dart';
 import 'widgets/translate_screen/main_translete_widget.dart';
 
 void main() {
@@ -20,32 +16,34 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LanguageScope(
-        child: MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (context) => TranslateBloc(Repository())),
-      ],
-      child: AnnotatedRegion<SystemUiOverlayStyle>(
-        value: const SystemUiOverlayStyle(
-          statusBarColor: Color(0xff2B282A),
-          systemNavigationBarColor: Colors.black,
-          statusBarIconBrightness: Brightness.dark,
-          systemNavigationBarIconBrightness: Brightness.dark,
-        ),
-        child: MaterialApp(
-          initialRoute: '/main',
-          onGenerateRoute: (settings) {
-            log(settings.name.toString());
-            if (settings.name == '/main') {
-              return SlideRightRoute(page: const MainTranslete());
-            }
-            if (settings.name == '/language') {
-              return SlideRightRoute(page: const LanguageChange());
-            }
-          },
-          title: 'Flutter Demo',
-          theme: ThemeData(),
-        ),
+      child: MaterialApp(
+        initialRoute: '/main',
+        onGenerateRoute: (settings) {
+          log(settings.name.toString());
+
+          if (settings.arguments == LanType.current) {
+            return MaterialPageRoute(builder: (context) {
+              return const LanguageChange(targetOrCurrent: LanType.current);
+            });
+          }
+          if (settings.arguments == LanType.target) {
+            return MaterialPageRoute(builder: (context) {
+              return const LanguageChange(targetOrCurrent: LanType.target);
+            });
+          }
+          if (settings.name == '/main') {
+            return SlideRightRoute(page: const MainTranslete());
+          }
+          if (settings.name == '/language') {
+            return SlideRightRoute(
+                page: LanguageChange(
+              targetOrCurrent: settings.arguments as LanType,
+            ));
+          }
+        },
+        title: 'Flutter Demo',
+        theme: ThemeData(),
       ),
-    ));
+    );
   }
 }
