@@ -17,8 +17,9 @@ class LanguageScope extends StatefulWidget {
 
 class _LanguageScopeState extends State<LanguageScope> {
   String currentLanguage = 'Русский';
-  String requestLanguage = 'ru';
+  String requestCurrentLang = 'ru';
   String targetLanguage = 'Английский';
+  String requestTargetLang = 'en';
 
   void changeCurrentLanguage(String lang) {
     currentLanguage = lang;
@@ -31,21 +32,44 @@ class _LanguageScopeState extends State<LanguageScope> {
     });
   }
 
-  void changeRequestLanguage(String lang) {
+  void changeRequestCurrentLanguage(String lang) {
     setState(() {
-      requestLanguage = lang;
+      requestCurrentLang = lang;
     });
+  }
+
+  void changeRequestTargetLanguage(String lang) {
+    setState(() {
+      requestTargetLang = lang;
+    });
+  }
+
+  void changeLanguages() {
+    var swap1 = requestCurrentLang;
+    var swap2 = requestTargetLang;
+    var swap3 = currentLanguage;
+    var swap4 = targetLanguage;
+
+    requestCurrentLang = swap2;
+    requestTargetLang = swap1;
+    currentLanguage = swap4;
+    targetLanguage = swap3;
+
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     return _LanguageScopeInherited(
-      changeRequestLang: changeRequestLanguage,
+      changeLanguages: changeLanguages,
       changeTargetLang: changeTargetLanguage,
       changeCurrentLang: changeCurrentLanguage,
-      requestLanguage: requestLanguage,
+      changeRequestTargetLanguage: changeRequestTargetLanguage,
+      changeRequestCurrentLanguage: changeRequestCurrentLanguage,
       currentLanguage: currentLanguage,
       targetLanguage: targetLanguage,
+      requestCurrentLang: requestCurrentLang,
+      requestTargetLang: requestTargetLang,
       child: widget.child,
     );
   }
@@ -53,9 +77,12 @@ class _LanguageScopeState extends State<LanguageScope> {
 
 class _LanguageScopeInherited extends InheritedModel {
   const _LanguageScopeInherited({
-    required this.requestLanguage,
-    required this.changeRequestLang,
     Key? key,
+    required this.changeLanguages,
+    required this.requestCurrentLang,
+    required this.requestTargetLang,
+    required this.changeRequestCurrentLanguage,
+    required this.changeRequestTargetLanguage,
     required this.changeTargetLang,
     required this.changeCurrentLang,
     required this.currentLanguage,
@@ -65,10 +92,13 @@ class _LanguageScopeInherited extends InheritedModel {
 
   final String currentLanguage;
   final String targetLanguage;
-  final String requestLanguage;
+  final String requestCurrentLang;
+  final String requestTargetLang;
   final void Function(String) changeCurrentLang;
   final void Function(String) changeTargetLang;
-  final void Function(String) changeRequestLang;
+  final void Function(String) changeRequestCurrentLanguage;
+  final void Function(String) changeRequestTargetLanguage;
+  final void Function() changeLanguages;
 
   @override
   bool updateShouldNotify(_LanguageScopeInherited oldWidget) {

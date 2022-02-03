@@ -69,7 +69,7 @@ flutter:
     - assets/icons/reverse_icon.svg
     - assets/icons/down_arrow_icon.svg
     - assets/icons/voice_icon.svg
-    - assets/icons/microphon_icon.svg
+    - assets/icons/microphone_icon.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
