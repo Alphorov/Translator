@@ -6,6 +6,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:translator_deepl/repositoty/repository.dart';
 import 'package:translator_deepl/widgets/Inherited/language_scope.dart';
 
+import 'sub_widgets/sub_widgets.dart';
+
+enum LanType { target, current }
+
 class MainTranslate extends StatelessWidget {
   const MainTranslate({Key? key}) : super(key: key);
 
@@ -13,31 +17,15 @@ class MainTranslate extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: const Color(0xff202123),
+        backgroundColor: const Color.fromARGB(255, 56, 58, 61),
         body: SingleChildScrollView(
           child: Column(
-            children: [
+            children: const [
               ColoredBox(
-                color: const Color(0xff303134),
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 7),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text('PlTranslator',
-                          style: GoogleFonts.montserratAlternates(
-                              fontSize: 36,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w300)),
-                      const SizedBox(
-                        width: 7,
-                      ),
-                      SvgPicture.asset('assets/icons/top_icon.svg')
-                    ],
-                  ),
-                ),
+                color: Color.fromARGB(255, 112, 113, 117),
+                child: _TopLogo(),
               ),
-              const MainTranslateContent()
+              MainTranslateContent()
             ],
           ),
         ),
@@ -45,8 +33,6 @@ class MainTranslate extends StatelessWidget {
     );
   }
 }
-
-enum LanType { target, current }
 
 class MainTranslateContent extends StatefulWidget {
   const MainTranslateContent({Key? key}) : super(key: key);
@@ -56,36 +42,40 @@ class MainTranslateContent extends StatefulWidget {
 }
 
 class _MainTranslateContentState extends State<MainTranslateContent> {
-  final mainTextStyle =
-      GoogleFonts.lato(fontSize: 18, fontWeight: FontWeight.w400);
-
-  final inputController = TextEditingController();
-
-  final outputController = TextEditingController();
+  void swap() {
+    setState(() {
+      LanguageScope.of(context).changeLanguages();
+      var swap1 = _inputController.text;
+      var swap2 = _outputController.text;
+      _inputController.text = swap2;
+      _outputController.text = swap1;
+    });
+  }
 
   void _autoTranslate() async {
     await Future.delayed(const Duration(seconds: 1));
-    if (inputController.text != '') {
+    if (_inputController.text != '') {
       final resalt = await Repository().tranlate(
-          inputController.text,
+          _inputController.text,
           LanguageScope.of(context).requestCurrentLang,
           LanguageScope.of(context).requestTargetLang);
-      outputController.text = resalt;
+      _outputController.text = resalt;
     } else {
-      outputController.text = '';
+      _outputController.text = '';
     }
   }
 
-  @override
-  void initState() {
-    inputController.addListener(() => _autoTranslate());
-    super.initState();
-  }
+  final _langTextStyle = GoogleFonts.lato(
+      color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold);
+
+  final _inputController = TextEditingController();
+
+  final _outputController = TextEditingController();
 
   @override
-  void dispose() {
-    inputController.dispose();
-    super.dispose();
+  void initState() {
+    _inputController.addListener(() => _autoTranslate());
+    super.initState();
   }
 
   @override
@@ -95,184 +85,71 @@ class _MainTranslateContentState extends State<MainTranslateContent> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              decoration: BoxDecoration(
-                color: const Color(0xff2A2B2F),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.5),
-                    spreadRadius: 1,
-                    blurRadius: 1,
-                    offset: const Offset(0, 1),
-                  ),
-                ],
-              ),
-              height: 350,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: TextButton(
-                            onPressed: () => Navigator.of(context).pushNamed(
-                                  '/languages',
-                                  arguments: LanType.current,
-                                ),
-                            child: Row(
-                              children: [
-                                Text(
-                                  LanguageScope.of(context).currentLanguage,
-                                  style: mainTextStyle,
-                                ),
-                                SvgPicture.asset(
-                                    'assets/icons/down_arrow_icon.svg')
-                              ],
-                            )),
-                      ),
-                      Expanded(
-                        child: TextButton(
-                            onPressed: () => {
-                                  setState(() {
-                                    LanguageScope.of(context).changeLanguages();
-                                    var swap1 = inputController.text;
-                                    var swap2 = outputController.text;
-                                    inputController.text = swap2;
-                                    outputController.text = swap1;
-                                  })
-                                },
-                            child: SvgPicture.asset(
-                                'assets/icons/reverse_icon.svg')),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 10),
-                        child: TextButton(
-                          onPressed: () => Navigator.of(context).pushNamed(
-                            '/languages',
-                            arguments: LanType.target,
-                          ),
-                          child: Row(
-                            children: [
-                              Text(
-                                LanguageScope.of(context).targetLanguage,
-                                style: mainTextStyle,
-                              ),
-                              SvgPicture.asset(
-                                  'assets/icons/down_arrow_icon.svg')
-                            ],
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  const Divider(
-                    thickness: 1,
-                    height: 0,
-                    color: Color(0xffC9CACC),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 10, horizontal: 40),
-                    child: Text(LanguageScope.of(context).currentLanguage,
-                        style: GoogleFonts.lato(
-                            color: const Color(0xffA3A3A3),
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold)),
-                  ),
-                  TextField(
-                    style: GoogleFonts.montserrat(
-                        fontSize: 16, color: Colors.white),
-                    autofocus: false,
-                    cursorWidth: 2,
-                    cursorRadius: const Radius.circular(6),
-                    cursorHeight: 22,
-                    cursorColor: Colors.white,
-                    controller: inputController,
-                    decoration: const InputDecoration(
-                      contentPadding: EdgeInsets.all(8),
-                      hintText: 'Введите текст',
-                      hintStyle: TextStyle(color: Color(0xffC9CACC)),
-                      border: InputBorder.none,
-                    ),
-                    keyboardType: TextInputType.multiline,
-                    maxLines: null,
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: const Color(0xff2A2B2F),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.5),
-                      spreadRadius: 1,
-                      blurRadius: 1,
-                      offset: const Offset(0, 1),
-                    ),
-                  ],
-                ),
-                height: 290,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 47),
-                      child: Text(
-                        LanguageScope.of(context).targetLanguage,
-                        style: GoogleFonts.lato(
-                            color: const Color(0xffA3A3A3),
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    TextField(
-                      style: GoogleFonts.montserrat(
-                          fontSize: 16, color: Colors.white),
-                      cursorWidth: 2,
-                      cursorRadius: const Radius.circular(6),
-                      cursorHeight: 22,
-                      cursorColor: Colors.white,
-                      controller: outputController,
-                      decoration: const InputDecoration(
-                        contentPadding: EdgeInsets.all(8),
-                        border: InputBorder.none,
-                      ),
-                      keyboardType: TextInputType.multiline,
-                      maxLines: null,
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            InputBackSide(_inputController, _langTextStyle, swap: swap),
+            OutputBackSide(
+                langTextStyle: _langTextStyle,
+                outputController: _outputController),
           ],
         ),
         Positioned(
-          left: 10,
-          top: 357.5,
+          left: 15,
+          top: 366,
           child: IconButton(
               onPressed: () {},
-              icon: SvgPicture.asset('assets/icons/voice_icon.svg')),
+              icon: SvgPicture.asset(
+                'assets/icons/voice_icon.svg',
+                color: Colors.black,
+              )),
         ),
         Positioned(
           left: -3,
           top: 48.5,
           child: IconButton(
               onPressed: () {},
-              icon: SvgPicture.asset('assets/icons/voice_icon.svg')),
+              icon: SvgPicture.asset(
+                'assets/icons/voice_icon.svg',
+                color: Colors.black,
+              )),
         ),
         Positioned(
             right: 10,
             top: 55,
             child: IconButton(
-              icon: SvgPicture.asset('assets/icons/microphone_icon.svg'),
+              icon: SvgPicture.asset(
+                'assets/icons/microphone_icon.svg',
+              ),
               onPressed: () {},
             )),
+      ],
+    );
+  }
+
+  @override
+  void dispose() {
+    _inputController.dispose();
+    super.dispose();
+  }
+}
+
+class _TopLogo extends StatelessWidget {
+  const _TopLogo({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text('PlTranslator',
+            style: GoogleFonts.montserratAlternates(
+                fontSize: 36,
+                color: Colors.white,
+                fontWeight: FontWeight.w300)),
+        const SizedBox(
+          width: 5,
+        ),
+        SvgPicture.asset('assets/icons/top_icon.svg')
       ],
     );
   }

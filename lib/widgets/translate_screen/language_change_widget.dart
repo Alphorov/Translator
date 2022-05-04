@@ -20,11 +20,11 @@ class _LanguageChangeState extends State<LanguageChange> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: const Color(0xff303134),
+        backgroundColor: Theme.of(context).colorScheme.background,
         body: Column(
           children: [
             ColoredBox(
-              color: const Color(0xff303134),
+              color: const Color.fromARGB(255, 112, 113, 117),
               child: SizedBox(
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
