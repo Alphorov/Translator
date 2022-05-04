@@ -81,13 +81,21 @@ class _LanguageChangeState extends State<LanguageChange> {
                 valueListenable: _langController,
                 builder: (context, TextEditingValue text, _) {
                   return LanguageList(
-                    countries: Country.country
-                        .where(
-                          (element) => element['name']!
-                              .toLowerCase()
-                              .contains(text.text.toLowerCase()),
-                        )
-                        .toList(),
+                    countries: widget.currentOrTarget == LanType.target
+                        ? Country.countryForTarget
+                            .where(
+                              (element) => element['name']!
+                                  .toLowerCase()
+                                  .contains(text.text.toLowerCase()),
+                            )
+                            .toList()
+                        : Country.countryForCurrent
+                            .where(
+                              (element) => element['name']!
+                                  .toLowerCase()
+                                  .contains(text.text.toLowerCase()),
+                            )
+                            .toList(),
                     currentOrTarget: widget.currentOrTarget,
                   );
                 },

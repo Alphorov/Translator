@@ -45,15 +45,17 @@ class _LanguageScopeState extends State<LanguageScope> {
   }
 
   void changeLanguages() {
-    var swap1 = requestCurrentLang;
-    var swap2 = requestTargetLang;
-    var swap3 = currentLanguage;
-    var swap4 = targetLanguage;
+    if (requestCurrentLang != "auto") {
+      var swap1 = requestCurrentLang;
+      var swap2 = requestTargetLang;
+      var swap3 = currentLanguage;
+      var swap4 = targetLanguage;
 
-    requestCurrentLang = swap2;
-    requestTargetLang = swap1;
-    currentLanguage = swap4;
-    targetLanguage = swap3;
+      requestCurrentLang = swap2;
+      requestTargetLang = swap1;
+      currentLanguage = swap4;
+      targetLanguage = swap3;
+    }
 
     setState(() {});
   }

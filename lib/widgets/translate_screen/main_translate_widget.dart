@@ -107,7 +107,7 @@ class _MainTranslateContentState extends State<MainTranslateContent> {
                   ),
                 ],
               ),
-              height: 283,
+              height: 350,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -173,8 +173,8 @@ class _MainTranslateContentState extends State<MainTranslateContent> {
                     color: Color(0xffC9CACC),
                   ),
                   Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 5, horizontal: 37),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 40),
                     child: Text(LanguageScope.of(context).currentLanguage,
                         style: GoogleFonts.lato(
                             color: const Color(0xffA3A3A3),
@@ -182,7 +182,6 @@ class _MainTranslateContentState extends State<MainTranslateContent> {
                             fontWeight: FontWeight.bold)),
                   ),
                   TextField(
-                    // onChanged: _autoTranslate,
                     style: GoogleFonts.montserrat(
                         fontSize: 16, color: Colors.white),
                     autofocus: false,
@@ -217,13 +216,13 @@ class _MainTranslateContentState extends State<MainTranslateContent> {
                     ),
                   ],
                 ),
-                height: 200,
+                height: 290,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 5, horizontal: 45),
+                          vertical: 10, horizontal: 47),
                       child: Text(
                         LanguageScope.of(context).targetLanguage,
                         style: GoogleFonts.lato(
@@ -255,14 +254,14 @@ class _MainTranslateContentState extends State<MainTranslateContent> {
         ),
         Positioned(
           left: 10,
-          top: 286.5,
+          top: 357.5,
           child: IconButton(
               onPressed: () {},
               icon: SvgPicture.asset('assets/icons/voice_icon.svg')),
         ),
         Positioned(
           left: -3,
-          top: 43.5,
+          top: 48.5,
           child: IconButton(
               onPressed: () {},
               icon: SvgPicture.asset('assets/icons/voice_icon.svg')),
