@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:translator_deepl/widgets/Inherited/language_scope.dart';
-import 'package:translator_deepl/widgets/translate_screen/country_list.dart';
-import 'package:translator_deepl/widgets/translate_screen/main_translate_widget.dart';
+
+import '../Inherited/language_scope.dart';
+import '../../data/country_list.dart';
+import '../translate/main_translate_widget.dart';
 
 class LanguageChange extends StatefulWidget {
   const LanguageChange({Key? key, required this.currentOrTarget})

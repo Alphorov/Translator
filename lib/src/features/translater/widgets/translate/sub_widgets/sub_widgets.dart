@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:translator_deepl/widgets/translate_screen/sub_widgets/swap_widget.dart';
 
 import '../../Inherited/language_scope.dart';
 import 'input_field.dart';
 import 'output_field.dart';
+import 'swap_widget.dart';
 
 class OutputBackSide extends StatelessWidget {
   const OutputBackSide({

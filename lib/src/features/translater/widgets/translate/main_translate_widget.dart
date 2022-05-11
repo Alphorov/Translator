@@ -2,9 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:translator_deepl/repositoty/repository.dart';
-import 'package:translator_deepl/widgets/Inherited/language_scope.dart';
-
+import '../../repositoty/repository.dart';
+import '../Inherited/language_scope.dart';
 import 'sub_widgets/sub_widgets.dart';
 
 enum LanType { target, current }
@@ -14,13 +13,11 @@ class MainTranslate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return const SafeArea(
       child: Scaffold(
-        backgroundColor: const Color.fromARGB(255, 56, 58, 61),
+        backgroundColor: Color.fromARGB(255, 56, 58, 61),
         body: SingleChildScrollView(
-          child: Column(
-            children: const [MainTranslateContent()],
-          ),
+          child: MainTranslateContent(),
         ),
       ),
     );

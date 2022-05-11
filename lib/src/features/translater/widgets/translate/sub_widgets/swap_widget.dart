@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:translator_deepl/src/features/translater/data/images.dart';
 
 import '../../Inherited/language_scope.dart';
 import '../main_translate_widget.dart';
@@ -12,10 +13,6 @@ class SwapWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _mainTextStyle = GoogleFonts.lato(
-      fontSize: 18,
-      fontWeight: FontWeight.w400,
-    );
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -26,24 +23,13 @@ class SwapWidget extends StatelessWidget {
                     '/languages',
                     arguments: LanType.current,
                   ),
-              child: Row(
-                children: [
-                  Text(
-                    LanguageScope.of(context).currentLanguage,
-                    style: _mainTextStyle,
-                  ),
-                  SvgPicture.asset(
-                    'assets/icons/down_arrow_icon.svg',
-                  )
-                ],
+              child: _Item(
+                icon: AppImage.downArrow,
+                lang: LanguageScope.of(context).currentLanguage,
               )),
         ),
         Expanded(
-          child: TextButton(
-              onPressed: () => swap(),
-              child: SvgPicture.asset(
-                'assets/icons/reverse_icon.svg',
-              )),
+          child: IconButton(onPressed: () => swap(), icon: AppImage.swap),
         ),
         Padding(
           padding: const EdgeInsets.only(right: 10),
@@ -52,20 +38,27 @@ class SwapWidget extends StatelessWidget {
               '/languages',
               arguments: LanType.target,
             ),
-            child: Row(
-              children: [
-                Text(
-                  LanguageScope.of(context).targetLanguage,
-                  style: _mainTextStyle,
-                ),
-                SvgPicture.asset(
-                  'assets/icons/down_arrow_icon.svg',
-                )
-              ],
+            child: _Item(
+              icon: AppImage.downArrow,
+              lang: LanguageScope.of(context).targetLanguage,
             ),
           ),
         )
       ],
+    );
+  }
+}
+
+class _Item extends StatelessWidget {
+  const _Item({Key? key, required this.lang, required this.icon})
+      : super(key: key);
+  final String lang;
+  final SvgPicture icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [Text(lang), icon],
     );
   }
 }
