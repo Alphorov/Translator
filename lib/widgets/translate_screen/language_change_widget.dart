@@ -20,39 +20,32 @@ class _LanguageChangeState extends State<LanguageChange> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Color.fromARGB(255, 75, 75, 75),
+        backgroundColor: const Color.fromARGB(255, 75, 75, 75),
         body: Column(
           children: [
             ColoredBox(
               color: const Color.fromARGB(255, 75, 75, 75),
               child: SizedBox(
                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 15),
-                      child: Column(
-                        children: [
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          IconButton(
-                            color: Colors.black,
-                            icon: const Icon(Icons.arrow_back_ios),
-                            onPressed: () => Navigator.pop(context),
-                          ),
-                        ],
-                      ),
+                    Column(
+                      children: [
+                        const SizedBox(
+                          height: 6,
+                        ),
+                        IconButton(
+                          color: Colors.black,
+                          icon: const Icon(Icons.arrow_back_ios),
+                          onPressed: () => Navigator.pop(context),
+                        ),
+                      ],
                     ),
                     Expanded(
                         child: Padding(
                       padding: const EdgeInsets.only(right: 40, top: 5),
                       child: TextField(
+                        style: const TextStyle(color: Colors.white),
                         controller: _langController,
-                        cursorWidth: 3,
-                        cursorRadius: const Radius.circular(6),
-                        cursorHeight: 20,
-                        cursorColor: Colors.purple,
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.all(0),
                           hintText: 'Поиск языка',
@@ -63,9 +56,6 @@ class _LanguageChangeState extends State<LanguageChange> {
                           constraints: const BoxConstraints(
                               maxHeight: 50, minHeight: 50),
                           border: InputBorder.none,
-                          focusedBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.transparent),
-                          ),
                         ),
                       ),
                     ))
@@ -73,8 +63,8 @@ class _LanguageChangeState extends State<LanguageChange> {
                 ),
               ),
             ),
-            Container(
-              height: 1,
+            const Divider(
+              height: 2,
               color: Colors.grey,
             ),
             Flexible(
@@ -146,7 +136,7 @@ class _LanguageListState extends State<LanguageList> {
                 }
             },
             child: ListTile(
-              tileColor: Color.fromARGB(255, 51, 51, 51),
+              tileColor: const Color.fromARGB(255, 51, 51, 51),
               title: Text(
                 widget.countries[index]['name']!,
                 style: GoogleFonts.lato(
