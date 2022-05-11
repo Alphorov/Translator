@@ -20,11 +20,11 @@ class _LanguageChangeState extends State<LanguageChange> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Color.fromARGB(255, 75, 75, 75),
         body: Column(
           children: [
             ColoredBox(
-              color: const Color.fromARGB(255, 112, 113, 117),
+              color: const Color.fromARGB(255, 75, 75, 75),
               child: SizedBox(
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -146,7 +146,7 @@ class _LanguageListState extends State<LanguageList> {
                 }
             },
             child: ListTile(
-              tileColor: const Color(0xff202020),
+              tileColor: Color.fromARGB(255, 51, 51, 51),
               title: Text(
                 widget.countries[index]['name']!,
                 style: GoogleFonts.lato(

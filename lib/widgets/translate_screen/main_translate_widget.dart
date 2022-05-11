@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:translator_deepl/repositoty/repository.dart';
 import 'package:translator_deepl/widgets/Inherited/language_scope.dart';
@@ -20,13 +19,7 @@ class MainTranslate extends StatelessWidget {
         backgroundColor: const Color.fromARGB(255, 56, 58, 61),
         body: SingleChildScrollView(
           child: Column(
-            children: const [
-              ColoredBox(
-                color: Color.fromARGB(255, 112, 113, 117),
-                child: _TopLogo(),
-              ),
-              MainTranslateContent()
-            ],
+            children: const [MainTranslateContent()],
           ),
         ),
       ),
@@ -43,12 +36,11 @@ class MainTranslateContent extends StatefulWidget {
 
 class _MainTranslateContentState extends State<MainTranslateContent> {
   void swap() {
+    LanguageScope.of(context).changeLanguages();
     setState(() {
-      LanguageScope.of(context).changeLanguages();
-      var swap1 = _inputController.text;
-      var swap2 = _outputController.text;
-      _inputController.text = swap2;
-      _outputController.text = swap1;
+      var swap = _outputController.text;
+      _outputController.text = _inputController.text;
+      _inputController.text = swap;
     });
   }
 
@@ -80,17 +72,12 @@ class _MainTranslateContentState extends State<MainTranslateContent> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            InputBackSide(_inputController, _langTextStyle, swap: swap),
-            OutputBackSide(
-                langTextStyle: _langTextStyle,
-                outputController: _outputController),
-          ],
-        ),
+        InputBackSide(_inputController, _langTextStyle, swap: swap),
+        OutputBackSide(
+            langTextStyle: _langTextStyle, outputController: _outputController),
       ],
     );
   }
@@ -99,29 +86,5 @@ class _MainTranslateContentState extends State<MainTranslateContent> {
   void dispose() {
     _inputController.dispose();
     super.dispose();
-  }
-}
-
-class _TopLogo extends StatelessWidget {
-  const _TopLogo({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text('PlTranslator',
-            style: GoogleFonts.montserratAlternates(
-                fontSize: 36,
-                color: Colors.white,
-                fontWeight: FontWeight.w300)),
-        const SizedBox(
-          width: 5,
-        ),
-        SvgPicture.asset('assets/icons/top_icon.svg')
-      ],
-    );
   }
 }

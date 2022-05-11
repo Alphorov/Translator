@@ -20,13 +20,13 @@ class OutputBackSide extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
       child: Container(
         decoration: const BoxDecoration(
           color: Color.fromARGB(255, 75, 75, 75),
           borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
-        height: 290,
+        height: 330,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -62,7 +62,8 @@ class InputBackSide extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(10)),
+        borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10)),
         color: Color.fromARGB(255, 75, 75, 75),
       ),
       height: 350,

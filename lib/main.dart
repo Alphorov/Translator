@@ -9,7 +9,7 @@ import 'widgets/translate_screen/main_translate_widget.dart';
 void main() {
   runApp(const MyApp());
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    statusBarColor: Color.fromARGB(255, 112, 113, 117),
+    statusBarColor: Color.fromARGB(255, 75, 75, 75),
   ));
 }
 
