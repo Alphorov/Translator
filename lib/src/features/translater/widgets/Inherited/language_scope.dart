@@ -3,44 +3,34 @@ import 'package:flutter/material.dart';
 class LanguageScope extends StatefulWidget {
   const LanguageScope({Key? key, required this.child}) : super(key: key);
   final Widget child;
-  static _LanguageScopeInherited of(BuildContext context) {
-    final inhW =
-        context.dependOnInheritedWidgetOfExactType<_LanguageScopeInherited>();
-    final languageScope = inhW is _LanguageScopeInherited ? inhW : null;
-    return languageScope ?? _notFound();
+
+  static LanguageScopeState of(BuildContext context) {
+    return (context
+            .dependOnInheritedWidgetOfExactType<_LanguageScopeInherited>())!
+        .data;
   }
 
-  static Never _notFound() => throw UnsupportedError('Did not found element');
   @override
-  _LanguageScopeState createState() => _LanguageScopeState();
+  LanguageScopeState createState() => LanguageScopeState();
 }
 
-class _LanguageScopeState extends State<LanguageScope> {
+class LanguageScopeState extends State<LanguageScope> {
   String currentLanguage = 'Русский';
   String requestCurrentLang = 'ru';
   String targetLanguage = 'Английский';
   String requestTargetLang = 'en';
 
-  void changeCurrentLanguage(String lang) {
-    currentLanguage = lang;
+  void changeCurrentLang(Map<String, String> lang) {
+    currentLanguage = lang['name'] ?? '';
+    requestCurrentLang = lang['code'] ?? '';
+
     setState(() {});
   }
 
-  void changeTargetLanguage(String lang) {
+  void changeTargetLang(Map<String, String> lang) {
     setState(() {
-      targetLanguage = lang;
-    });
-  }
-
-  void changeRequestCurrentLanguage(String lang) {
-    setState(() {
-      requestCurrentLang = lang;
-    });
-  }
-
-  void changeRequestTargetLanguage(String lang) {
-    setState(() {
-      requestTargetLang = lang;
+      targetLanguage = lang['name'] ?? '';
+      requestTargetLang = lang['code'] ?? '';
     });
   }
 
@@ -63,53 +53,36 @@ class _LanguageScopeState extends State<LanguageScope> {
   @override
   Widget build(BuildContext context) {
     return _LanguageScopeInherited(
-      changeLanguages: changeLanguages,
-      changeTargetLang: changeTargetLanguage,
-      changeCurrentLang: changeCurrentLanguage,
-      changeRequestTargetLanguage: changeRequestTargetLanguage,
-      changeRequestCurrentLanguage: changeRequestCurrentLanguage,
+      child: widget.child,
+      data: this,
       currentLanguage: currentLanguage,
-      targetLanguage: targetLanguage,
       requestCurrentLang: requestCurrentLang,
       requestTargetLang: requestTargetLang,
-      child: widget.child,
+      targetLanguage: targetLanguage,
     );
   }
 }
 
-class _LanguageScopeInherited extends InheritedModel {
-  const _LanguageScopeInherited({
+class _LanguageScopeInherited extends InheritedWidget {
+  _LanguageScopeInherited({
     Key? key,
-    required this.changeLanguages,
-    required this.requestCurrentLang,
-    required this.requestTargetLang,
-    required this.changeRequestCurrentLanguage,
-    required this.changeRequestTargetLanguage,
-    required this.changeTargetLang,
-    required this.changeCurrentLang,
+    required this.child,
+    required this.data,
     required this.currentLanguage,
+    required this.requestCurrentLang,
     required this.targetLanguage,
-    required final Widget child,
+    required this.requestTargetLang,
   }) : super(key: key, child: child);
 
-  final String currentLanguage;
-  final String targetLanguage;
-  final String requestCurrentLang;
-  final String requestTargetLang;
-  final void Function(String) changeCurrentLang;
-  final void Function(String) changeTargetLang;
-  final void Function(String) changeRequestCurrentLanguage;
-  final void Function(String) changeRequestTargetLanguage;
-  final void Function() changeLanguages;
+  String currentLanguage;
+  String requestCurrentLang;
+  String targetLanguage;
+  String requestTargetLang;
+  final Widget child;
+  final LanguageScopeState data;
 
   @override
   bool updateShouldNotify(_LanguageScopeInherited oldWidget) {
-    return true;
-  }
-
-  @override
-  bool updateShouldNotifyDependent(
-      covariant InheritedModel oldWidget, Set dependencies) {
     return true;
   }
 }

@@ -122,17 +122,13 @@ class _LanguageListState extends State<LanguageList> {
               if (widget.currentOrTarget == LanType.current)
                 {
                   LanguageScope.of(context)
-                      .changeCurrentLang(widget.countries[index]['name']!),
-                  LanguageScope.of(context).changeRequestCurrentLanguage(
-                      widget.countries[index]['code']!),
+                      .changeCurrentLang(widget.countries[index]),
                   Navigator.pop(context)
                 },
               if (widget.currentOrTarget == LanType.target)
                 {
                   LanguageScope.of(context)
-                      .changeTargetLang(widget.countries[index]['name']!),
-                  LanguageScope.of(context).changeRequestTargetLanguage(
-                      widget.countries[index]['code']!),
+                      .changeTargetLang(widget.countries[index]),
                   Navigator.pop(context)
                 }
             },
