@@ -18,6 +18,6 @@ class AppSettings {
           builder: (context) =>
               const LanguageChange(currentOrTarget: LanType.target));
     }
-    return null;
+    return MaterialPageRoute(builder: (context) => const MainTranslate());
   }
 }
