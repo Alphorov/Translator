@@ -54,6 +54,7 @@ class _LanguageChangeState extends State<LanguageChange> {
                         cursorHeight: 20,
                         cursorColor: Colors.purple,
                         decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.all(0),
                           hintText: 'Поиск языка',
                           hintStyle: GoogleFonts.lato(
                               fontSize: 18,

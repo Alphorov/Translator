@@ -91,35 +91,6 @@ class _MainTranslateContentState extends State<MainTranslateContent> {
                 outputController: _outputController),
           ],
         ),
-        Positioned(
-          left: 15,
-          top: 366,
-          child: IconButton(
-              onPressed: () {},
-              icon: SvgPicture.asset(
-                'assets/icons/voice_icon.svg',
-                color: Colors.black,
-              )),
-        ),
-        Positioned(
-          left: -3,
-          top: 48.5,
-          child: IconButton(
-              onPressed: () {},
-              icon: SvgPicture.asset(
-                'assets/icons/voice_icon.svg',
-                color: Colors.black,
-              )),
-        ),
-        Positioned(
-            right: 10,
-            top: 55,
-            child: IconButton(
-              icon: SvgPicture.asset(
-                'assets/icons/microphone_icon.svg',
-              ),
-              onPressed: () {},
-            )),
       ],
     );
   }

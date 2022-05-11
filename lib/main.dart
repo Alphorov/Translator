@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -38,24 +36,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LanguageScope(
-      child: MaterialApp(
-        initialRoute: '/main',
-        onGenerateRoute: (RouteSettings settings) => _route(settings),
-        title: 'Flutter Demo',
-        theme: ThemeData(
-            colorScheme: const ColorScheme(
-                background: Color.fromARGB(255, 56, 58, 61),
-                brightness: Brightness.light,
-                error: Colors.red,
-                onBackground: Colors.black,
-                onError: Colors.red,
-                onPrimary: Color.fromARGB(255, 134, 131, 131),
-                onSecondary: Color.fromARGB(255, 96, 95, 95),
-                onSurface: Colors.white,
-                primary: Color.fromARGB(255, 134, 131, 131),
-                secondary: Color.fromARGB(255, 96, 95, 95),
-                surface: Color.fromARGB(255, 33, 7, 202))),
-      ),
-    );
+        child: MaterialApp(
+            initialRoute: '/main',
+            onGenerateRoute: (RouteSettings settings) => _route(settings),
+            title: 'Flutter Demo',
+            theme: ThemeData()));
   }
 }
