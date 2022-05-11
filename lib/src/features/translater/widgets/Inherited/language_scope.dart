@@ -4,17 +4,17 @@ class LanguageScope extends StatefulWidget {
   const LanguageScope({Key? key, required this.child}) : super(key: key);
   final Widget child;
 
-  static LanguageScopeState of(BuildContext context) {
+  static _LanguageScopeState of(BuildContext context) {
     return (context
             .dependOnInheritedWidgetOfExactType<_LanguageScopeInherited>())!
         .data;
   }
 
   @override
-  LanguageScopeState createState() => LanguageScopeState();
+  _LanguageScopeState createState() => _LanguageScopeState();
 }
 
-class LanguageScopeState extends State<LanguageScope> {
+class _LanguageScopeState extends State<LanguageScope> {
   String currentLanguage = 'Русский';
   String requestCurrentLang = 'ru';
   String targetLanguage = 'Английский';
@@ -63,6 +63,7 @@ class LanguageScopeState extends State<LanguageScope> {
   }
 }
 
+// ignore: must_be_immutable
 class _LanguageScopeInherited extends InheritedWidget {
   _LanguageScopeInherited({
     Key? key,
@@ -79,7 +80,7 @@ class _LanguageScopeInherited extends InheritedWidget {
   String targetLanguage;
   String requestTargetLang;
   final Widget child;
-  final LanguageScopeState data;
+  final _LanguageScopeState data;
 
   @override
   bool updateShouldNotify(_LanguageScopeInherited oldWidget) {
