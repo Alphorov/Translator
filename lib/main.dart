@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:translator_deepl/src/common/bloc/observer.dart';
 
 import 'src/common/settings/route_setting.dart';
 import 'src/features/translater/widgets/Inherited/language_scope.dart';
 
 void main() {
-  runApp(const MyApp(),),
+  runApp(
+    const MyApp(),
+  );
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Color.fromARGB(255, 75, 75, 75),
   ));
