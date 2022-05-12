@@ -7,11 +7,7 @@ import 'src/common/settings/route_setting.dart';
 import 'src/features/translater/widgets/Inherited/language_scope.dart';
 
 void main() {
-  BlocOverrides.runZoned(
-      () => runApp(
-            const MyApp(),
-          ),
-      blocObserver: AppObserver());
+  runApp(const MyApp(),),
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Color.fromARGB(255, 75, 75, 75),
   ));
